@@ -1,16 +1,14 @@
 " Specify a directory for plugins
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'vim-airline/vim-airline', { 'do': ':UpdateRemotePlugins' }
-Plug 'vim-airline/vim-airline-themes'
 Plug 'majutsushi/tagbar', { 'do': ':UpdateRemotePlugins' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'dhruvasagar/vim-table-mode', { 'do': ':UpdateRemotePlugins' }
 Plug 'vimwiki/vimwiki', { 'do': ':UpdateRemotePlugins' }
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
-Plug 'NLKNguyen/papercolor-theme'
+Plug 'morhetz/gruvbox'
 
 " Initialize plugin system
 call plug#end()
@@ -28,7 +26,8 @@ set clipboard=unnamed
 set exrc
 set secure
 
-" enable syntax syntax enable
+" enable syntax enable
+syntax on
 
 " set paste toggle to F2
 set pastetoggle=<F2>
@@ -46,14 +45,9 @@ if (has("nvim"))
 endif
 
 set t_Co=256
-set background=dark
-"colorscheme one
-let g:airline_theme='papercolor'
-"let g:airline_theme='one'
-"colorscheme gruvbox
-"let g:airline_theme='gruvbox'
+set background=light
 
-colorscheme PaperColor
+colorscheme gruvbox
 
 " disale arrow keys to break bad habbits
 noremap <Up> <NOP>
@@ -149,25 +143,7 @@ let g:netrw_winsize = 20
 " don't keep history of directories that have been modified
 let g:netrw_dirhistmax = 0
 
-let g:PaperColor_Theme_Options = {
-  \   'language': {
-  \     'python': {
-  \       'highlight_builtins' : 1
-  \     },
-  \     'cpp': {
-  \       'highlight_standard_library': 1
-  \     },
-  \     'c': {
-  \       'highlight_builtins' : 1
-  \     }
-  \   }
-  \ }
-
-" To use echodoc, you must increase 'cmdheight' value.
-"set cmdheight=2
-"let g:echodoc_enable_at_startup = 1
-"
-"
+" check if should be removed
 " if hidden is not set, TextEdit might fail.
 set hidden
 
