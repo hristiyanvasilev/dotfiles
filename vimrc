@@ -8,7 +8,7 @@ Plug 'vimwiki/vimwiki', { 'do': ':UpdateRemotePlugins' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
-Plug 'morhetz/gruvbox'
+Plug 'arcticicestudio/nord-vim'
 
 " Initialize plugin system
 call plug#end()
@@ -45,9 +45,9 @@ if (has("nvim"))
 endif
 
 set t_Co=256
-set background=light
+set background=dark
 
-colorscheme gruvbox
+colorscheme nord
 
 " disale arrow keys to break bad habbits
 noremap <Up> <NOP>
