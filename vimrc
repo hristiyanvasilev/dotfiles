@@ -11,7 +11,10 @@ Plug 'junegunn/fzf.vim'
 Plug 'drewtempelmeyer/palenight.vim'
 Plug 'vim-scripts/cscope.vim'
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'arcticicestudio/nord-vim'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'preservim/nerdcommenter'
+Plug 'dhruvasagar/vim-table-mode'
 
 
 " Initialize plugin system
@@ -36,9 +39,10 @@ syntax on
 " set paste toggle to F2
 set pastetoggle=<F2>
 
+" 80 character line restriction
 " column width to 80 characters
-set textwidth=80
-set colorcolumn=+1
+"set textwidth=80
+"set colorcolumn=+1
 
 if exists('+termguicolors')
   set termguicolors
@@ -52,8 +56,10 @@ set t_Co=256
 "set background=dark
 set background=light
 
+
 "colorscheme palenight
 colorscheme PaperColor
+"colorscheme nord
 
 let g:airline_theme = "papercolor"
 
@@ -298,3 +304,7 @@ nnoremap  <leader>fe :call cscope#find('e', expand('<cword>'))<CR>
 nnoremap  <leader>ff :call cscope#find('f', expand('<cword>'))<CR>
 " i: Find files #including this file
 nnoremap  <leader>fi :call cscope#find('i', expand('<cword>'))<CR>
+
+" keymap for bulgarian-phonetic and default (us-english)
+nnoremap <leader>lbg :set keymap=bulgarian-phonetic<CR>
+nnoremap <leader>lus :set keymap=""<CR>
