@@ -53,15 +53,16 @@ if (has("nvim"))
 endif
 
 set t_Co=256
-"set background=dark
-set background=light
+set background=dark
+"set background=light
 
 
 "colorscheme palenight
-colorscheme PaperColor
-"colorscheme nord
+"colorscheme PaperColor
+colorscheme nord
 
-let g:airline_theme = "papercolor"
+"let g:airline_theme = "papercolor"
+let g:airline_theme = "nord"
 
 " disale arrow keys to break bad habbits
 noremap <Up> <NOP>
@@ -122,7 +123,7 @@ augroup END
 set foldlevel=999
 
 " set line numbering on
-set relativenumber
+"set relativenumber
 set number
 
 " enable airline all the time
@@ -308,3 +309,5 @@ nnoremap  <leader>fi :call cscope#find('i', expand('<cword>'))<CR>
 " keymap for bulgarian-phonetic and default (us-english)
 nnoremap <leader>lbg :set keymap=bulgarian-phonetic<CR>
 nnoremap <leader>lus :set keymap=""<CR>
+
+let g:coc_disable_startup_warning = 1
