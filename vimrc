@@ -2,19 +2,22 @@
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'vim-airline/vim-airline', { 'do': ':UpdateRemotePlugins' }
 Plug 'majutsushi/tagbar', { 'do': ':UpdateRemotePlugins' }
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'vimwiki/vimwiki', { 'do': ':UpdateRemotePlugins' }
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 Plug 'drewtempelmeyer/palenight.vim'
-Plug 'vim-scripts/cscope.vim'
 Plug 'NLKNguyen/papercolor-theme'
-Plug 'arcticicestudio/nord-vim'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'preservim/nerdcommenter'
 Plug 'dhruvasagar/vim-table-mode'
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"Plug 'fatih/vim-go'
+
+"Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+"Plug 'junegunn/fzf.vim'
 
 
 " Initialize plugin system
@@ -23,8 +26,9 @@ call plug#end()
 set pumheight=10
 set completeopt=menu,longest
 let g:SuperTabDefaultCompletionType='context'
-let g:clang_complete_auto=1
-let g:clang_auto_select=2    " automatically select and insert the first matc
+"hris - test
+"let g:clang_complete_auto=1
+"let g:clang_auto_select=2    " automatically select and insert the first matc
 
 set clipboard=unnamed
 
@@ -53,16 +57,14 @@ if (has("nvim"))
 endif
 
 set t_Co=256
-set background=dark
-"set background=light
+set background=light
+"set background=dark
 
 
 "colorscheme palenight
-"colorscheme PaperColor
-colorscheme nord
+colorscheme PaperColor
 
 "let g:airline_theme = "papercolor"
-let g:airline_theme = "nord"
 
 " disale arrow keys to break bad habbits
 noremap <Up> <NOP>
@@ -277,34 +279,16 @@ nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
 nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
 " Search workspace symbols
 nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+
+nnoremap <silent> <space>f  :<C-u>CocList files<cr>
+nnoremap <silent> <space>g  :<C-u>CocList grep<cr>
+
 " Do default action for next item.
 nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-
-
-"cscope stuff
-nnoremap <leader>fa :call cscope#findInteractive(expand('<cword>'))<CR>
-nnoremap <leader>l :call ToggleLocationList()<CR>
-
-" s: Find this C symbol
-nnoremap  <leader>fs :call cscope#find('s', expand('<cword>'))<CR>
-" g: Find this definition
-nnoremap  <leader>fg :call cscope#find('g', expand('<cword>'))<CR>
-" d: Find functions called by this function
-nnoremap  <leader>fd :call cscope#find('d', expand('<cword>'))<CR>
-" c: Find functions calling this function
-nnoremap  <leader>fc :call cscope#find('c', expand('<cword>'))<CR>
-" t: Find this text string
-nnoremap  <leader>ft :call cscope#find('t', expand('<cword>'))<CR>
-" e: Find this egrep pattern
-nnoremap  <leader>fe :call cscope#find('e', expand('<cword>'))<CR>
-" f: Find this file
-nnoremap  <leader>ff :call cscope#find('f', expand('<cword>'))<CR>
-" i: Find files #including this file
-nnoremap  <leader>fi :call cscope#find('i', expand('<cword>'))<CR>
 
 " keymap for bulgarian-phonetic and default (us-english)
 nnoremap <leader>lbg :set keymap=bulgarian-phonetic<CR>
