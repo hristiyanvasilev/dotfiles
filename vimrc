@@ -1,6 +1,5 @@
 " Specify a directory for plugins
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'vim-airline/vim-airline', { 'do': ':UpdateRemotePlugins' }
 Plug 'majutsushi/tagbar', { 'do': ':UpdateRemotePlugins' }
 Plug 'vimwiki/vimwiki', { 'do': ':UpdateRemotePlugins' }
 
@@ -9,16 +8,12 @@ Plug 'junegunn/fzf.vim'
 
 Plug 'drewtempelmeyer/palenight.vim'
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'vim-airline/vim-airline', { 'do': ':UpdateRemotePlugins' }
 Plug 'vim-airline/vim-airline-themes'
 Plug 'preservim/nerdcommenter'
 Plug 'dhruvasagar/vim-table-mode'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-"Plug 'fatih/vim-go'
-
-"Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-"Plug 'junegunn/fzf.vim'
-
 
 " Initialize plugin system
 call plug#end()
@@ -26,9 +21,6 @@ call plug#end()
 set pumheight=10
 set completeopt=menu,longest
 let g:SuperTabDefaultCompletionType='context'
-"hris - test
-"let g:clang_complete_auto=1
-"let g:clang_auto_select=2    " automatically select and insert the first matc
 
 set clipboard=unnamed
 
@@ -58,13 +50,12 @@ endif
 
 set t_Co=256
 set background=light
-"set background=dark
 
 
 "colorscheme palenight
 colorscheme PaperColor
 
-"let g:airline_theme = "papercolor"
+let g:airline_theme = "papercolor"
 
 " disale arrow keys to break bad habbits
 noremap <Up> <NOP>
@@ -291,7 +282,7 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 " keymap for bulgarian-phonetic and default (us-english)
-nnoremap <leader>lbg :set keymap=bulgarian-phonetic<CR>
+" nnoremap <leader>lbg :set keymap=bulgarian-phonetic<CR>
 nnoremap <leader>lus :set keymap=""<CR>
 
 let g:coc_disable_startup_warning = 1
