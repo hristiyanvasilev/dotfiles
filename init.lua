@@ -32,6 +32,8 @@ vim.api.nvim_command [[ colorscheme PaperColor ]]
 
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
+vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], { noremap = true, silent = true })
+
 local opts = { noremap=true, silent=true }
 vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>',	opts)
 vim.api.nvim_set_keymap('n', '[d',       '<cmd>lua vim.diagnostic.goto_prev()<CR>',		opts)
@@ -44,6 +46,10 @@ vim.api.nvim_set_keymap('n', ',l',       ':Lines<CR>',									opts)
 vim.api.nvim_set_keymap('n', ',m',       ':Map<CR>',									opts)
 vim.api.nvim_set_keymap('n', ',s',     	 ':Snippets<CR>',								opts)
 vim.api.nvim_set_keymap('n', ',h',       ':Helptags<CR>',								opts)
+
+vim.api.nvim_set_keymap('n', ',r',       ':lua vim.lsp.buf.reference()<CR>',								opts)
+vim.api.nvim_set_keymap('n', ',d',       ':lua vim.lsp.buf.definition()<CR>',								opts)
+vim.api.nvim_set_keymap('n', ',t',       ':lua vim.lsp.buf.workspace_symbol()<CR>',								opts)
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
