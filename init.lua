@@ -1,20 +1,54 @@
-local use = require('packer').use
-require('packer').startup(function()
-  use 'wbthomason/packer.nvim'
-  use 'neovim/nvim-lspconfig'
-  use 'junegunn/fzf'
-  use 'junegunn/fzf.vim'
-  use 'NLKNguyen/papercolor-theme'
-  use 'vim-airline/vim-airline'
-  use 'vim-airline/vim-airline-themes'
-  use 'hrsh7th/cmp-nvim-lsp'
-  use 'hrsh7th/nvim-cmp'
-  use 'saadparwaiz1/cmp_luasnip'
-  use 'L3MON4D3/LuaSnip' -- Snippets plugin
-end)
+vim.pack.add({
+  { src = "https://github.com/neovim/nvim-lspconfig" },
+  { src = "https://github.com/junegunn/fzf" },
+  { src = "https://github.com/junegunn/fzf.vim" },
+  { src = "https://github.com/NLKNguyen/papercolor-theme" },
+  -- { src = "https://github.com/vim-airline/vim-airline" },
+  -- { src = "https://github.com/vim-airline/vim-airline-themes" },
+  { src = "https://github.com/hrsh7th/cmp-nvim-lsp" },
+  { src = "https://github.com/hrsh7th/nvim-cmp" },
+  { src = "https://github.com/saadparwaiz1/cmp_luasnip" },
+  { src = "https://github.com/L3MON4D3/LuaSnip" },
+  { src = "https://github.com/vimwiki/vimwiki" },
+  { src = "https://github.com/ellisonleao/gruvbox.nvim" },
+  { src = "https://github.com/catppuccin/nvim", name = "catppuccin" },
+  { src = "https://github.com/maxmx03/solarized.nvim" },
+  { src = "https://github.com/mcauley-penney/techbase.nvim" },
+}, { load = true })
 
-vim.api.nvim_command [[ set number ]]
-vim.api.nvim_command [[ set relativenumber ]]
+vim.o.background = 'light'
+vim.o.termguicolors = true
+
+local solarized = require('solarized')
+solarized.setup({})
+
+require("techbase").setup({
+  italic_comments = false,
+  transparent = false,
+  hl_overrides = {},
+})
+
+
+-- Custom commands
+vim.api.nvim_create_user_command("InitTab", function()
+  vim.cmd("tabedit $MYVIMRC")
+end, {})
+
+vim.api.nvim_create_user_command("TermTab", function(opts)
+  vim.cmd("tabnew")
+  if opts.args ~= "" then
+    vim.cmd("term " .. opts.args)
+  else
+    vim.cmd("term")
+  end
+end, {
+  nargs = "*",
+  complete = "shellcmd",
+})
+
+--TODO: try it out and decide which one is better
+--vim.api.nvim_command [[ set number ]]
+--vim.api.nvim_command [[ set relativenumber ]]
 
 local set = vim.opt -- set options
 
@@ -24,15 +58,42 @@ set.softtabstop = 0
 set.shiftwidth = 4
 set.expandtab=true
 set.smarttab=true
+-- TODO: test without the status line to see if it is better
+set.laststatus = 0
 
 -- Set color scheme and background color
 set.termguicolors = true
+--set.background = "dark"
 set.background = "light"
-vim.api.nvim_command [[ colorscheme PaperColor ]]
+--vim.api.nvim_command [[ colorscheme catppuccin-mocha ]] vim.api.nvim_command [[ colorscheme gruvbox ]]
+--vim.api.nvim_command [[ colorscheme solarized ]]
+--vim.api.nvim_command [[ colorscheme PaperColor ]]
+vim.api.nvim_command [[ colorscheme sw1comm ]]
 
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], { noremap = true, silent = true })
+
+vim.keymap.set("n", "<leader>q", "<cmd>enew | bd#<cr>", { desc = "Close file, keep tab" })
+
+vim.keymap.set("n", "<leader>cp", function()
+  local path = vim.fn.expand("%:p")
+  vim.fn.setreg("+", path)
+  print("Copied: " .. path)
+end, { desc = "Copy current file path" })
+
+vim.keymap.set("n", "<leader>tt", function()
+  vim.opt.showtabline = (vim.o.showtabline == 0) and 2 or 0
+end, { desc = "Toggle tabline" })
+
+vim.keymap.set("n", "<leader>nn", function()
+  vim.wo.number = not vim.wo.number
+end, { desc = "Toggle line numbers" })
+
+vim.keymap.set("n", "<leader>nr", function()
+  vim.wo.number = not vim.wo.number
+  vim.wo.relativenumber = not vim.wo.relativenumber
+end, { desc = "Toggle line relative numbers" })
 
 local opts = { noremap=true, silent=true }
 vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>',	opts)
@@ -40,6 +101,7 @@ vim.api.nvim_set_keymap('n', '[d',       '<cmd>lua vim.diagnostic.goto_prev()<CR
 vim.api.nvim_set_keymap('n', ']d',       '<cmd>lua vim.diagnostic.goto_next()<CR>',		opts)
 vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>',	opts)
 
+vim.api.nvim_set_keymap('n', ',w',       ':Windows<CR>',									opts)
 vim.api.nvim_set_keymap('n', ',f',       ':Files<CR>',									opts)
 vim.api.nvim_set_keymap('n', ',b',       ':Buffers<CR>',								opts)
 vim.api.nvim_set_keymap('n', ',l',       ':Lines<CR>',									opts)
@@ -80,26 +142,49 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
+vim.lsp.config('clangd', {
+  cmd = {
+    'clangd',
+    '--background-index',
+    '--clang-tidy',
+    '--completion-style=detailed',
+  },
+  filetypes = { 'c', 'cpp', 'objc', 'objcpp' },
+  capabilities = capabilities,
+  on_attach = on_attach,
+})
+
+
+vim.lsp.config('pyright', {
+  cmd = { 'pyright-langserver', '--stdio' },
+
+  filetypes = { 'python' },
+
+  capabilities = capabilities,
+
+  on_attach = on_attach,
+
+  settings = {
+    python = {
+      analysis = {
+        autoSearchPaths = true,
+        useLibraryCodeForTypes = true,
+        diagnosticMode = 'workspace',
+        typeCheckingMode = 'basic',
+      },
+    },
+  },
+})
+
+vim.lsp.enable('clangd')
+vim.lsp.enable('pyright')
+
 -- defaults for all servers
 vim.lsp.config('*', {
   capabilities = capabilities,
   on_attach = on_attach,
   flags = {
     debounce_text_changes = 150,
-  },
-})
-
--- per-server overrides
-vim.lsp.config('gopls', {
-  settings = {
-    gopls = {
-      experimentalPostfixCompletions = true,
-      analyses = {
-        unusedparams = true,
-        shadow = true,
-      },
-      staticcheck = true,
-    },
   },
 })
 
