@@ -37,9 +37,9 @@ end, {})
 vim.api.nvim_create_user_command("TermTab", function(opts)
   vim.cmd("tabnew")
   if opts.args ~= "" then
-    vim.cmd("term " .. opts.args)
+    vim.cmd.terminal(opts.args)
   else
-    vim.cmd("term")
+    vim.cmd.terminal()
   end
 end, {
   nargs = "*",
@@ -105,11 +105,11 @@ vim.api.nvim_set_keymap('n', ',w',       ':Windows<CR>',									opts)
 vim.api.nvim_set_keymap('n', ',f',       ':Files<CR>',									opts)
 vim.api.nvim_set_keymap('n', ',b',       ':Buffers<CR>',								opts)
 vim.api.nvim_set_keymap('n', ',l',       ':Lines<CR>',									opts)
-vim.api.nvim_set_keymap('n', ',m',       ':Map<CR>',									opts)
+vim.api.nvim_set_keymap('n', ',m',       ':Maps<CR>',									opts)
 vim.api.nvim_set_keymap('n', ',s',     	 ':Snippets<CR>',								opts)
 vim.api.nvim_set_keymap('n', ',h',       ':Helptags<CR>',								opts)
 
-vim.api.nvim_set_keymap('n', ',r',       ':lua vim.lsp.buf.reference()<CR>',								opts)
+vim.api.nvim_set_keymap('n', ',r',       ':lua vim.lsp.buf.references()<CR>',								opts)
 vim.api.nvim_set_keymap('n', ',d',       ':lua vim.lsp.buf.definition()<CR>',								opts)
 vim.api.nvim_set_keymap('n', ',t',       ':lua vim.lsp.buf.workspace_symbol()<CR>',								opts)
 
@@ -136,7 +136,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.format()<CR>', opts)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
