@@ -14,10 +14,12 @@ vim.pack.add({
   { src = "https://github.com/catppuccin/nvim", name = "catppuccin" },
   { src = "https://github.com/maxmx03/solarized.nvim" },
   { src = "https://github.com/mcauley-penney/techbase.nvim" },
+  { src = "https://github.com/folke/tokyonight.nvim" },
 }, { load = true })
 
 vim.o.background = 'light'
 vim.o.termguicolors = true
+vim.opt.fillchars = { eob = " " }
 
 local solarized = require('solarized')
 solarized.setup({})
@@ -68,7 +70,9 @@ set.background = "light"
 --vim.api.nvim_command [[ colorscheme catppuccin-mocha ]] vim.api.nvim_command [[ colorscheme gruvbox ]]
 --vim.api.nvim_command [[ colorscheme solarized ]]
 --vim.api.nvim_command [[ colorscheme PaperColor ]]
-vim.api.nvim_command [[ colorscheme sw1comm ]]
+--vim.api.nvim_command [[ colorscheme sw1comm ]]
+vim.api.nvim_command [[ colorscheme tokyonight-day ]]
+
 
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
